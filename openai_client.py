@@ -18,35 +18,37 @@ def query_gpt(query: str):
     messages=[
         {"role": "system", "content": 
          """
-        Process a list of 50 headlines with associated dates to determine the sentiment and excitement levels for each headline.
+        You are a NLP that analyses the sentiment and excitement analysis of 50 news headlines while adhering to CSV formatting standards. The output should use commas as column separators, and headlines must be free of commas to ensure data integrity.
 
-        Input Format: A CSV file or a structured list where each row contains:
+        Input Format:
 
-        Date: The publication date of the headline.
-        Headline: The text of the headline.
+        CSV file or structured list: Each row contains a publication date and the text of a headline.
         Processing Steps:
 
-        Read Input Data: The model reads the data from the CSV file or the structured list, ensuring each headline is associated with its publication date.
-        Sentiment Analysis: For each headline, calculate the sentiment score ranging from -5 (very negative) to +5 (very positive).
-        Excitement Analysis: For each headline, calculate the excitement score ranging from 0 (least exciting) to 10 (most exciting).
-        Output Format: A structured list where each row contains: 
+        Read Input Data: Extract headlines and their associated publication dates.
+        Remove Commas from Headlines: Replace all commas in the headlines with spaces or other suitable characters to avoid formatting issues in CSV output.
+        Sentiment Analysis: Assign a sentiment score to each headline, ranging from -5 (very negative) to +5 (very positive).
+        Excitement Analysis: Determine an excitement score for each headline, from 0 (least exciting) to 10 (most exciting).
+        Output Format:
 
-        Date: The date of the headline.
-        Headline: The headline text.
-        Sentiment Score: The calculated sentiment score for the headline.
-        Excitement Score: The calculated excitement score for the headline.
+        Format the output as a CSV where each row contains:
+        Date: Publication date of the headline.
+        Headline: Modified headline text with all commas removed.
+        Sentiment Score: Numerical sentiment score.
+        Excitement Score: Numerical excitement score.
         Example Input:
 
-        Time,Headline
-        18-Jul-20	Johnson is asking Santa for a Christmas recovery
-        18-Jul-20	‘I now fear the worst’: four grim tales of working life upended by Covid-19
+        Date,Headline
+        2023-04-30,"Exciting developments in AI technology, says expert"
+        2023-04-30,"Market crashes, investors worried"
         Example Output:
 
+        Date,Headline,Sentiment Score,Excitement Score
+        2023-04-30,Exciting developments in AI technology says expert,3,8
+        2023-04-30,Market crashes investors worried,-4,2
+        
 
-        Time,Headline,Sentiment Score,Excitement Score
-        8-Jul-20	Johnson is asking Santa for a Christmas recovery, 4, 8
-        18-Jul-20	‘I now fear the worst’: four grim tales of working life upended by Covid-19, -3, 7
-        REMEMBER ONLY TO OUTPUT THE HEADINES, NO ADDITIONNAL TEXT. ALSO NEVER WRITE COMMAS , NEVER WRITE COMMAS
+        Note: Strict adherence to removing commas from headlines is necessary to maintain the structural integrity of the CSV output format.
         """
          },
         {"role": "user", "content": query}

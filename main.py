@@ -1,7 +1,11 @@
 from csv_processing import truncate_csv_by_date
 from openai_client import query_gpt
 from plotting import plot_data
-headlines = truncate_csv_by_date("guardian_headlines.csv", "4-Jul-20")
+
+TARGET_DATE = "16-Aug-19"
+headlines = truncate_csv_by_date("guardian_headlines.csv", TARGET_DATE)
+
+print(headlines)
 
 data = query_gpt(headlines)
 
@@ -9,5 +13,5 @@ data = query_gpt(headlines)
 data = "Time,Headline,Sentiment,Excitement\n" + data
 
 print(data)
-plot_data(data)
+plot_data(data, TARGET_DATE)
 
